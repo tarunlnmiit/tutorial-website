@@ -1,0 +1,18 @@
+<!DOCTYPE html> {% load staticfiles %}
+
+<html>
+
+<head>
+    <meta charset="utf-8"> {% include 'headCss.html' %} {% include 'headJs.html' %}
+    <title></title>
+</head>
+
+<body>
+    {% include 'navbar.html' %} {% include 'about.html' %} {% include 'contact.html' %} {% include 'catalog.html' %}
+    <ul class="collapsible popout" data-collapsible="accordion">
+        {% include 'site.html' %}
+    </ul>
+    {% include 'footer.html' %}
+</body>
+
+</html>

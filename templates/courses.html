@@ -1,0 +1,56 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!--  -->
+    {% include 'headCss.html' %}
+    <!--  -->
+    {% include 'headJs.html' %}
+    <title></title>
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    <!--  -->
+    {% include 'about.html' %}
+    <!--  -->
+    {% include 'contact.html' %}
+    <ul class="collapsible popout" data-collapsible="accordion" id="courses">
+        {% for entry in data %}
+        <li>
+            <div class="collapsible-header">
+                <h4>
+                <p>
+                {{ entry.0 }}
+                </p>
+            </h4>
+            </div>
+            <div class="collapsible-body">
+                {% load el_pagination_tags %}
+                <!--  -->
+                {% paginate videos %}
+                <!--  -->
+                {% for video in videos %}
+                <div class="divider"></div>
+                <div class="section">
+                    <h5>{{ video }}</h5>
+                    <p>thsni sajosnu fjajfu n jabsfyaiba iuai aStuff</p>
+                </div>
+                {% endfor %} {% get_pages %}
+                <ul align="center" class="pagination">
+                    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                    {% for page in pages %}
+                    <li class="waves-effect"><a href="{{ page.url }}">{{ page.number }}</a></li>
+                    {% endfor %}
+                    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                </ul>
+            </div>
+        </li>
+        <br><br> {% endfor %}
+    </ul>
+    {% include 'footer.html' %}
+</body>
+
+</html>
