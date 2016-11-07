@@ -22,6 +22,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '49%k1c2g=o$7w-!tabs%*i4+oyg9i738di0l)qg6om!0i%)%c&'
 
+SOCIAL_AUTH_TWITTER_KEY = '3OHsuUSrPpuMOIpH1uHBnnfXE'
+SOCIAL_AUTH_TWITTER_SECRET = 'nSqZ5Kw3zRtrRG5FsMSFs6c5otnaLAOJQwjmMythqHIL8KPRwp'
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -77,7 +80,9 @@ TEMPLATES = [
 
 AUTHENTICATION_BACKENDS = (
     'social.backends.facebook.FacebookOAuth2',
+    'social.backends.github.GithubOAuth2',
     'social.backends.google.GoogleOAuth2',
+    'social.backends.linkedin.LinkedinOAuth2',
     'social.backends.twitter.TwitterOAuth',
     'django.contrib.auth.backends.ModelBackend',
 )

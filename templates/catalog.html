@@ -8,11 +8,11 @@
                 <div class="col s2 card-panel teal lighten-2">
                     <span class="flow-text">{{ entry.0 }}</span>
                 </div>
-                <div class="col s4 offset-s5">
-                    <ul class="right hide-on-med-and-down">
-                        <li><a class='dropdown-button btn waves-effect waves-light' href='#' data-activates='dropdownvid'>{{ entry.1 }}</a>
+                <div class="col s5 offset-s5">
+                    <ul class="right">
+                        <li><a class='dropdown-button btn waves-effect waves-light' href='#' data-activates='dropdownvid'>{{ entry.0 }} Videos</a>
                             <ul id='dropdownvid' class='dropdown-content'>
-                                {% for video in videos %}
+                                {% for video in entry.2 %}
                                 <li><a href="#!" class="waves-effect waves-light">{{ video }}</a></li>
                                 <li class="divider"></li>
                                 {% endfor %}

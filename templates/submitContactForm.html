@@ -1,0 +1,27 @@
+{% load staticfiles %}
+
+<script type="text/javascript">
+    $(document).on('submit', '#contactForm', function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: "POST",
+            url: '/contact/',
+            data: {
+                name: $('#input_name').val(),
+                email: $('#input_email').val(),
+                subject: $('#input_subject').val(),
+                message: $('#input_message').val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+            },
+            success: function() {
+                sweetAlert('Your Information was received.\n Thank you for contacting.');
+            },
+            error: function() {
+                swal("Oops!", "Something went wrong on the page!", "error");
+            }
+        });
+    });
+</script>
+}); });
+</script>
