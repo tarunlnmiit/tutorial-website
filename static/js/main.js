@@ -24,10 +24,10 @@ function onYouTubeIframeAPIReady() {
     player = new YT.Player('video1', {
         width: 400,
         height: 400,
-        videoId: 'PT2_F-1esPk',
-        playerVars: {
-            playlist: 'PT2_F-1esPk,PT2_F-1esPk'
-        },
+        videoId: 'XVAoaikFFAE',
+        // playerVars: {
+        //     playlist: 'PT2_F-1esPk,PT2_F-1esPk'
+        // },
         events: {
             'onStateChange': onPlayerStateChange
         }
@@ -35,10 +35,10 @@ function onYouTubeIframeAPIReady() {
     player = new YT.Player('video2', {
         width: 400,
         height: 400,
-        videoId: 'NzZgwsZagkU',
-        playerVars: {
-            playlist: 'NzZgwsZagkU,NzZgwsZagkU'
-        },
+        videoId: 'IkGY2PR5qxQ',
+        // playerVars: {
+        //     playlist: 'NzZgwsZagkU,NzZgwsZagkU'
+        // },
         events: {
             'onStateChange': onPlayerStateChange
         }
@@ -46,10 +46,10 @@ function onYouTubeIframeAPIReady() {
     player = new YT.Player('video3', {
         width: 400,
         height: 400,
-        videoId: 'PT2_F-1esPk',
-        playerVars: {
-            playlist: 'PT2_F-1esPk,PT2_F-1esPk'
-        },
+        videoId: 'HvpjU51vbKM',
+        // playerVars: {
+        //     playlist: 'PT2_F-1esPk,PT2_F-1esPk'
+        // },
         events: {
             'onStateChange': onPlayerStateChange
         }
@@ -57,10 +57,10 @@ function onYouTubeIframeAPIReady() {
     player = new YT.Player('video4', {
         width: 400,
         height: 400,
-        videoId: 'PT2_F-1esPk',
-        playerVars: {
-            playlist: 'PT2_F-1esPk,PT2_F-1esPk'
-        },
+        videoId: 'L6Rh0EsUs54',
+        // playerVars: {
+        //     playlist: 'PT2_F-1esPk,PT2_F-1esPk'
+        // },
         events: {
             'onStateChange': onPlayerStateChange
         }
