@@ -16,26 +16,23 @@
     <!--  -->
     {% include 'about.html' %}
     <!--  -->
+    {% include 'catalog.html' %}
     {% include 'contact.html' %}
     <ul class="collapsible popout" data-collapsible="accordion" id="courses">
-        {% for entry in data %}
+        {% for data in videoData %}
         <li>
             <div class="collapsible-header">
                 <h4>
-                <p>
-                {{ entry.0 }}
-                </p>
-            </h4>
+                    <p>
+                        {{ data.0 }}
+                    </p>
+                </h4>
             </div>
             <div class="collapsible-body">
-                {% load el_pagination_tags %}
-                <!--  -->
-                {% paginate videos %}
-                <!--  -->
-                {% for video in videos %}
+                {% load el_pagination_tags %} {% with data.1 as items %} {% paginate items %} {% for video in data.1 %}
                 <div class="divider"></div>
                 <div class="section">
-                    <h5>{{ video }}</h5>
+                    <h5>{{ video.0 }}</h5>
                     <p>thsni sajosnu fjajfu n jabsfyaiba iuai aStuff</p>
                 </div>
                 {% endfor %} {% get_pages %}
@@ -46,6 +43,7 @@
                     {% endfor %}
                     <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
                 </ul>
+                {% endwith %}
             </div>
         </li>
         <br><br> {% endfor %}
