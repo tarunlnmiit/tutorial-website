@@ -22,8 +22,18 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '49%k1c2g=o$7w-!tabs%*i4+oyg9i738di0l)qg6om!0i%)%c&'
 
-SOCIAL_AUTH_TWITTER_KEY = '3OHsuUSrPpuMOIpH1uHBnnfXE'
-SOCIAL_AUTH_TWITTER_SECRET = 'nSqZ5Kw3zRtrRG5FsMSFs6c5otnaLAOJQwjmMythqHIL8KPRwp'
+SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'fields': 'id, name, email',
+}
+
+SOCIAL_AUTH_LINKEDIN_KEY = os.environ.get('SOCIAL_AUTH_LINKEDIN_KEY')
+SOCIAL_AUTH_LINKEDIN_SECRET = os.environ.get('SOCIAL_AUTH_LINKEDIN_SECRET')
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -34,7 +44,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'courses',
     'el_pagination',
     'login',
     'main',
@@ -80,10 +89,8 @@ TEMPLATES = [
 
 AUTHENTICATION_BACKENDS = (
     'social.backends.facebook.FacebookOAuth2',
-    'social.backends.github.GithubOAuth2',
     'social.backends.google.GoogleOAuth2',
-    'social.backends.linkedin.LinkedinOAuth2',
-    'social.backends.twitter.TwitterOAuth',
+    'social.backends.linkedin.LinkedinOAuth',
     'django.contrib.auth.backends.ModelBackend',
 )
 
