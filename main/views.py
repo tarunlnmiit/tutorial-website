@@ -1,6 +1,9 @@
+'''Main View'''
+from collections import OrderedDict
 from django.shortcuts import render
 from django.http import HttpResponse
 import MySQLdb
+import os
 
 # Create your views here.
 DATABASES = {
@@ -15,23 +18,38 @@ conn = MySQLdb.connect(host=DATABASES['HOST'], user=DATABASES['USER'],
 
 
 def home(request, template='index.html'):
+    '''Home Function'''
     cursor = conn.cursor()
 
+    videoData = OrderedDict()
+    query = 'SELECT DISTINCT(course_name) FROM video_data'
+
+    cursor.execute(query)
+    results = cursor.fetchall()
+
+    for result in results:
+        videoData[result[0]] = []
+
+    query = 'SELECT course_name, video_title, video_link FROM video_data \
+    ORDER BY course_name, video_title'
+
+    cursor.execute(query)
+    results = cursor.fetchall()
+
+    for result in results:
+        videoData[result[0]].append([result[1].strip().split(' | ')[1].strip(), result[2].strip()])
+
     courses = {
-        'data': [['Course 1', 'See Course 1 Videos', [
-            'vid 1', 'vid 2', 'vid 3', 'vid 4', 'vid 5']],
-            ['Course 2', 'See Course 2 Videos', [
-                'vid 1', 'vid 2', 'vid 3', 'vid 4', 'vid 5']],
-            ['Course 3', 'See Course 3 Videos', [
-                'vid 1', 'vid 2', 'vid 3', 'vid 4', 'vid 5']],
-            ['Course 4', 'See Course 4 Videos', [
-                'vid 1', 'vid 2', 'vid 3', 'vid 4', 'vid 5']]],
-        'videos': ['vid 1', 'vid 2', 'vid 3', 'vid 4', 'vid 5'],
-    }
+        'videoData': []
+        }
+    for key in videoData:
+        courses['videoData'].append([key, videoData[key]])
+
     return render(request, template, courses)
 
 
 def contact(request):
+    '''Contact Function'''
     cursor = conn.cursor()
     if request.method == 'POST':
         name = request.POST['name']
@@ -48,3 +66,33 @@ def contact(request):
         conn.commit()
 
     return HttpResponse('')
+
+def courses(request, template='courses.html'):
+    '''Courses Function'''
+    cursor = conn.cursor()
+
+    videoData = OrderedDict()
+    query = 'SELECT DISTINCT(course_name) FROM video_data'
+
+    cursor.execute(query)
+    results = cursor.fetchall()
+
+    for result in results:
+        videoData[result[0]] = []
+
+    query = 'SELECT course_name, video_title, video_link FROM video_data \
+    ORDER BY course_name, video_title'
+
+    cursor.execute(query)
+    results = cursor.fetchall()
+
+    for result in results:
+        videoData[result[0]].append([result[1].strip(), result[2].strip()])
+
+    courses = {
+        'videoData': [],
+        }
+    for key in videoData:
+        courses['videoData'].append([key, videoData[key]])
+
+    return render(request, template, courses)
