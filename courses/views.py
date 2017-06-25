@@ -1,22 +1,46 @@
+from django.http import HttpResponse
 from django.shortcuts import render
+from main.models import Videos
 # Create your views here.
 
 
 def courses(request, template='courses.html'):
+    '''Courses Function'''
+    videoData = dict()
+
+    coursesList = Videos.objects.values_list('course_name').distinct()
+    for course in coursesList:
+        videoData[course[0]] = []
+
+    videosDataList = Videos.objects.values_list('course_name', 'video_title', 'video_link').order_by('course_name', 'video_title')
+
+    for result in videosDataList:
+        videoData[result[0]].append([result[1].strip(), result[2].strip()])
+
     courses = {
-        'data': [['Course 1', 'See Course 1 Videos'],
-                 ['Course 2', 'See Course 2 Videos'],
-                 ['Course 3', 'See Course 3 Videos'],
-                 ['Course 4', 'See Course 4 Videos']],
-        'videos': ['this is a video 1', 'this is a video 2',
-                   'this is a video 3', 'this is a video 4',
-                   'this is a video 5', 'this is a video 6',
-                   'this is a video 7', 'this is a video 8',
-                   'this is a video 9', 'this is a video 10',
-                   'this is a video 11', 'this is a video 12',
-                   'this is a video 13', 'this is a video 14',
-                   'this is a video 15', 'this is a video 16',
-                   'this is a video 17', 'this is a video 18',
-                   'this is a video 19', 'this is a video 20'],
+        'skillLevels': ['Beginner', 'Intermediate', 'Advanced'],
+        'categories': ['All', 'Programming', 'Communication', 'Front-End Design'],
+        'technolgies': ['Python', 'HTML', 'CSS'],
+        'videoData': [],
     }
+    for key in videoData:
+        courses['videoData'].append([key, videoData[key]])
+
     return render(request, template, courses)
+
+
+def search(request):
+    '''Search Function'''
+    errors = []
+    if 'searchTerm' in request.GET:
+        searchTerm = request.GET['searchTerm']
+    if not searchTerm:
+        errors.append('Enter a search term.')
+    elif len(searchTerm) > 20:
+        errors.append('Please enter at most 20 characters.')
+    else:
+        results = Videos.objects.filter(course_name__icontains=searchTerm).distinct()
+        return render(request, 'searchResults.html',
+                      {'courses': results, 'query': searchTerm})
+    return render(request, 'index.html',
+                  {'errors': errors})
