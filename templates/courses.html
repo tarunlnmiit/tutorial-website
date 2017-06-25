@@ -4,50 +4,95 @@
 
 <head>
     <meta charset="utf-8">
-    <!--  -->
     {% include 'headCss.html' %}
-    <!--  -->
     {% include 'headJs.html' %}
-    <title></title>
+    <title>Courses</title>
 </head>
 
 <body>
     {% include 'navbar.html' %}
-    <!--  -->
     {% include 'about.html' %}
-    <!--  -->
     {% include 'catalog.html' %}
     {% include 'contact.html' %}
-    <ul class="collapsible popout" data-collapsible="accordion" id="courses">
-        {% for data in videoData %}
-        <li>
-            <div class="collapsible-header">
-                <h4>
-                    <p>
-                        {{ data.0 }}
-                    </p>
-                </h4>
-            </div>
-            <div class="collapsible-body">
-                {% load el_pagination_tags %} {% with data.1 as items %} {% paginate items %} {% for video in data.1 %}
-                <div class="divider"></div>
-                <div class="section">
-                    <h5>{{ video.0 }}</h5>
-                    <p>thsni sajosnu fjajfu n jabsfyaiba iuai aStuff</p>
+    {% include 'login.html' %}
+    <div class="row" id="coursesLeftPanel">
+        <div class="col s1"></div>
+        <div class="col s2">
+            <div class="divider"></div>
+            <h5 class="cyan-text accent-1 left-align">Categories</h5>
+            <ul>
+                {% for category in categories %}
+                    <li class="text-lighten-1 left-align"><h6>{{ category }}</h6></li>
+                {% endfor %}
+            </ul>
+            <div class="divider"></div>
+            <h5 class="cyan-text accent-1 left-align">Skill Level</h5>
+            <ul>
+                {% for level in skillLevels %}
+                    <li class="text-lighten-1 left-align"><h6>{{ level }}</h6></li>
+                {% endfor %}
+            </ul>
+            <div class="divider"></div>
+            <h5 class="cyan-text accent-1 left-align">Technology</h5>
+            <ul>
+                {% for technology in technolgies %}
+                    <li class="text-lighten-1 left-align"><h6>{{ technology }}</h6></li>
+                {% endfor %}
+            </ul>
+            <div class="divider"></div>
+        </div>
+        <div class="col s8">
+            <div class="col s12 m12">
+                <div class="card horizontal hoverable">
+                    <div class="card-image">
+                        <img src="https://lorempixel.com/100/190/nature/6">
+                    </div>
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <p>I am a very simple card. I am good at containing small bits of information.</p>
+                        </div>
+                    </div>
                 </div>
-                {% endfor %} {% get_pages %}
-                <ul align="center" class="pagination">
-                    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-                    {% for page in pages %}
-                    <li class="waves-effect"><a href="{{ page.url }}">{{ page.number }}</a></li>
-                    {% endfor %}
-                    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-                </ul>
-                {% endwith %}
             </div>
-        </li>
-        <br><br> {% endfor %}
-    </ul>
+            <div class="col s12 m12">
+                <div class="card horizontal hoverable">
+                    <div class="card-image">
+                        <img src="https://lorempixel.com/100/190/nature/6">
+                    </div>
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <p>I am a very simple card. I am good at containing small bits of information.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m12">
+                <div class="card horizontal hoverable">
+                    <div class="card-image">
+                        <img src="https://lorempixel.com/100/190/nature/6">
+                    </div>
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <p>I am a very simple card. I am good at containing small bits of information.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m12">
+                <div class="card horizontal hoverable">
+                    <div class="card-image">
+                        <img src="https://lorempixel.com/100/190/nature/6">
+                    </div>
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <p>I am a very simple card. I am good at containing small bits of information.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s1"></div>
+    </div>
     {% include 'footer.html' %}
 </body>
 
