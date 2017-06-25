@@ -20,7 +20,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '49%k1c2g=o$7w-!tabs%*i4+oyg9i738di0l)qg6om!0i%)%c&'
+if os.environ.get('ENVMNT') == 'production':
+    pass
+else:
+    SECRET_KEY = '49%k1c2g=o$7w-!tabs%*i4+oyg9i738di0l)qg6om!0i%)%c&'
+    # SECURITY WARNING: don't run with debug turned on in production!
+    DEBUG = True
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')
 SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')
@@ -35,25 +41,21 @@ SOCIAL_AUTH_LINKEDIN_SECRET = os.environ.get('SOCIAL_AUTH_LINKEDIN_SECRET')
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = [
-    'el_pagination',
-    'login',
-    'main',
-    'social.apps.django_app.default',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'el_pagination',
+    'social.apps.django_app.default',
+    'contact',
+    'courses',
+    'login',
+    'main',
 ]
 
 MIDDLEWARE = [
@@ -100,16 +102,34 @@ WSGI_APPLICATION = 'tutorialWebsite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tutorial',
-        'USER': 'root',
-        'PASSWORD': 'pass',
-        'HOST': 'localhost',
-        'PORT': 3306,
+if os.environ.get('ENVMNT') == 'production':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.environ.get('MYSQLDB'),
+            'USER': os.environ.get('MYSQLUSER'),
+            'PASSWORD': os.environ.get('MYSQLPASSWORD'),
+            'HOST': os.environ.get('MYSQLHOST'),
+            'PORT': 3306,
+            'OPTIONS': {
+                'sql_mode': 'traditional'
+            }
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'tutorial',
+            'USER': 'root',
+            'PASSWORD': '',
+            'HOST': 'localhost',
+            'PORT': 3306,
+            'OPTIONS': {
+                'sql_mode': 'traditional'
+            }
+        }
+    }
 
 
 # Password validation
@@ -155,4 +175,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'STATIC_ROOT')
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-STATIC_URL = '/static/'
+if os.environ.get('ENVMNT') == 'production':
+    STATIC_URL = STATIC_ROOT
+else:
+    STATIC_URL = '/static/'
