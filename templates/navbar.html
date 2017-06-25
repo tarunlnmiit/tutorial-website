@@ -8,52 +8,46 @@
                     <div class="userView">
                         <img class="background" src="{% static 'img/extra/office1.jpg' %}">
                         <a href="#!user"><img class="circle" src="{% static 'img/extra/profileimage.png' %}"></a>
-                        <a href="#!name"><span class="white-text name">John Doe</span></a>
-                        <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+                        {% if user and not user.is_anonymous %}
+                            <a href="#!name"><span class="white-text name">{{ user.get_full_name }}</span></a>
+                            <a href="#!email"><span class="white-text email">{{ user.email }}</span></a>
+                        {% else %}
+                            <h5>You're not logged in. Please log in to see your information.</h5>
+                        {% endif %}
                     </div>
                 </li>
-                <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-                <li><a href="#!">Second Link</a></li>
                 <li>
                     <div class="divider"></div>
                 </li>
-                <li><a class="subheader">Subheader</a></li>
-                <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+                <li><a class="subheader">Course Enrollment Information</a></li>
+                {% if user and not user.is_anonymous %}
+                    <li><a class="waves-effect" href="#!">Courses Enrolled</a></li>
+                {% else %}
+                    <li><a class="waves-effect" href="#!">Login to see your enrolled courses.</a></li>
+                {% endif %}
             </ul>
             <ul>
                 <li><a href="#" data-activates="slide-out" class="sideNav"><i class="material-icons">menu</i></a></li>
             </ul>
             <ul class="right">
                 <li>
-                    <form>
+                    <form action="{% url 'search' %}">
+                        {% csrf_token %}
                         <div class="input-field">
-                            <input id="search" type="search" required>
+                            <input id="search" type="search" required name="searchTerm">
                             <label for="search"><i class="material-icons waves-effect waves-light">search</i></label>
                             <i class="material-icons">close</i>
                         </div>
                     </form>
                 </li>
                 <li><a href="{% url 'home' %}" class="waves-effect waves-light">Home</a></li>
-                <li><a class="modal-trigger waves-effect waves-light" href="#catalog">Catalog</a></li>
+                <li><a class="modal-trigger waves-effect waves-light" href="{% url 'courses' %}">Courses</a></li>
                 <li><a class="modal-trigger waves-effect waves-light" href="#about">About</a></li>
                 <li><a class="modal-trigger waves-effect waves-light" href="#contact">Contact</a></li>
                 {% if user and not user.is_anonymous %}
-                <li>
-                    <a class='dropdown-button btn waves-effect waves-light' href='#' data-activates='dropdown1'>{{ user.get_full_name }}</a>
-                    <ul id='dropdown1' class='dropdown-content'>
-                        <li><a href="{% url 'logout' %}">Logout</a></li>
-                    </ul>
-                </li>
+                <li><a class="waves-effect waves-green btn-flat" href="{% url 'logout' %}">Logout</a></li>
                 {% else %}
-                <li><a class='dropdown-button btn waves-effect waves-light' href='#' data-activates='dropdown1'>Login</a>
-                    <ul id='dropdown1' class='dropdown-content'>
-                        <li><a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}"><i class="zmdi zmdi-facebook-box"></i></a></li>
-                        <li class="divider"></li>
-                        <li><a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}"><i class="zmdi zmdi-google"></i></a></li>
-                        <li class="divider"></li>
-                        <li><a href="{% url 'social:begin' 'linkedin' %}?next={{ request.path }}"><i class="zmdi zmdi-linkedin-box"></i></a></li>
-                    </ul>
-                </li>
+                <li><a class="modal-trigger waves-effect waves-light btn-flat" href="#login">Login</a></li>
                 {% endif %}
             </ul>
         </div>
