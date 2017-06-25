@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+import contact.views
+import courses.views
 import login.views
 import main.views
 
@@ -23,8 +25,9 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', main.views.home, name='home'),
     url(r'^home/', main.views.home, name='home'),
-    url(r'^contact/', main.views.contact, name='contact'),
-    url(r'^courses/', main.views.courses, name='courses'),
+    url(r'^contact/', contact.views.contact, name='contact'),
+    url(r'^courses/', courses.views.courses, name='courses'),
     url(r'^logout/', login.views.logout, name='logout'),
+    url(r'^search/', courses.views.search, name='search'),
     url('', include('social.apps.django_app.urls', namespace='social'))
 ]
